@@ -7,17 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookRequest {
+public class LibraryRequest {
 
-    long bookId;
+    long id;
 
-    int numberOfPages;
-
-    String bookName;
-
-    String isbn;
-
-    String publisher;
-
+    String name;
 
 }

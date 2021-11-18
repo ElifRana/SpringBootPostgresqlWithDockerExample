@@ -1,8 +1,10 @@
 package com.detay.libraryautomation.repository;
 
-import com.detay.libraryautomation.model.LibraryEntity;
+import com.detay.libraryautomation.model.Library;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface LibraryRepository extends JpaRepository<LibraryEntity, Integer> {
+@Repository
+public interface LibraryRepository extends JpaRepository<Library, Long> {
 
 }

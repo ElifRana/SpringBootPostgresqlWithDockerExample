@@ -1,20 +1,24 @@
 package com.detay.libraryautomation.service.authorService;
 
 import com.detay.libraryautomation.dto.AuthorRequest;
-import com.detay.libraryautomation.model.AuthorEntity;
-
+import com.detay.libraryautomation.dto.BookRequest;
+import com.detay.libraryautomation.model.Author;
+import org.springframework.stereotype.Component;
 import java.util.List;
+import java.util.Optional;
 
 public interface AuthorService {
 
-    AuthorEntity getAuthor(long authorId);
+    Author getAuthor(long authorId);
 
-    AuthorEntity createAuthor(AuthorRequest authorRequest);
+    Author createAuthor(AuthorRequest authorRequest);
 
-    AuthorEntity updateAuthor(long authorId, AuthorRequest authorRequest);
+    Author updateAuthor(long authorId, AuthorRequest authorRequest);
 
     void deleteAuthor(long authorId);
 
-    List<AuthorEntity> getAll();
+    List<Author> getAll();
+
+    Optional<Author> getBooks(long authorId);
 
 }

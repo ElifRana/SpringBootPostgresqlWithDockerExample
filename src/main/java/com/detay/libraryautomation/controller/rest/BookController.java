@@ -1,35 +1,30 @@
 package com.detay.libraryautomation.controller.rest;
 
 import com.detay.libraryautomation.dto.BookRequest;
-import com.detay.libraryautomation.model.BookEntity;
+import com.detay.libraryautomation.model.Book;
+import com.detay.libraryautomation.repository.BookRepository;
 import com.detay.libraryautomation.service.bookService.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/books")
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookController {
 
-    BookService bookService;
+    private final BookService bookService;
+    private BookRepository bookRepository;
 
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
-    }
-
-    @GetMapping("/{bookId}")
     @Operation(summary = "Get a book.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "A book has been brought in.",
@@ -38,17 +33,17 @@ public class BookController {
                     content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    public BookEntity getBook(@NotBlank @PathVariable("bookId") int bookId) {
+    @GetMapping("/{bookId}")
+    public Book getBook(@NotBlank @PathVariable("bookId") long bookId) {
         return bookService.getBook(bookId);
     }
 
-    @PostMapping("/book")
     @Operation(summary = "Create new book.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "New Book Created.",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = BookEntity.class))}),
+                            schema = @Schema(implementation = Book.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request.",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Not Found.",
@@ -59,11 +54,11 @@ public class BookController {
                     content = @Content)
     })
     @ResponseStatus(HttpStatus.CREATED)
-    public BookEntity createBook(@Valid @RequestBody BookRequest bookRequest) {
-        return bookService.createBook(bookRequest);
+    @PostMapping("/book")
+    public Book createBook(@NotBlank @PathVariable("bookId") long bookId,@Valid @RequestBody BookRequest bookRequest) {
+        return bookService.createBook(bookId, bookRequest);
     }
 
-    @PutMapping("/{bookId}")
     @Operation(summary = "Update book.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "A book has been update.",
@@ -72,11 +67,11 @@ public class BookController {
                     content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    public BookEntity updateBook(@NotBlank @PathVariable("bookId") int bookId, BookRequest bookRequest) {
+    @PutMapping("/{bookId}")
+    public Book updateBook(@NotBlank @PathVariable("bookId") long bookId, BookRequest bookRequest) {
         return bookService.updateBook(bookId, bookRequest);
     }
 
-    @DeleteMapping("/delete{bookId}")
     @Operation(summary = "Delete book.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "A book has been deleted.",
@@ -85,19 +80,21 @@ public class BookController {
                     content = @Content)
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBook(@PathVariable("bookId") int bookId) {
+    @DeleteMapping("/delete{bookId}")
+    public void deleteBook(@PathVariable("bookId") long bookId) {
         bookService.deleteBook(bookId);
     }
 
-    @GetMapping("/getBooks")
     @Operation(summary = "Get all books.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All books listed.",
                     content = {@Content(mediaType = "application/json")})
     })
     @ResponseStatus(HttpStatus.OK)
-    public List<BookEntity> getAll() {
+    @GetMapping("/getBooks")
+    public List<Book> getAll() {
         return bookService.getAll();
     }
+
 
 }

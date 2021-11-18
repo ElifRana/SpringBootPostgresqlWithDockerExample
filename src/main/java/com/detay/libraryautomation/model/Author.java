@@ -1,22 +1,25 @@
 package com.detay.libraryautomation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name = "author_entity")
+@Table(name = "authors")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorEntity {
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +34,16 @@ public class AuthorEntity {
     @NotBlank
     LocalDate yearOfBirth;
 
-    @OneToMany(mappedBy = "author_entity")
-    List<BookEntity> bookEntities;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("author")
+    private List<Book> bookList;
 
+    public void addBook(List<Book> books){
+
+        books.stream().forEach(book -> {
+            book.setAuthor(this);
+        });
+
+        this.bookList = books;
+    }
 }

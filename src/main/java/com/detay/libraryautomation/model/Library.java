@@ -13,17 +13,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "library_entities")
+@Table(name = "libraries")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LibraryEntity {
+public class Library {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    long id;
 
     String name;
-
-    @OneToMany(mappedBy = "library_entity")
-    List<BookEntity> bookEntities;
 
 }

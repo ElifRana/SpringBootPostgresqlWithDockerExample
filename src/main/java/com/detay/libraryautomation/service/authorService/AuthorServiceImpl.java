@@ -3,11 +3,13 @@ package com.detay.libraryautomation.service.authorService;
 import com.detay.libraryautomation.dto.AuthorRequest;
 import com.detay.libraryautomation.exception.author.AuthorAlreadyExistException;
 import com.detay.libraryautomation.exception.author.AuthorNotFoundException;
-import com.detay.libraryautomation.model.AuthorEntity;
+import com.detay.libraryautomation.model.Author;
+import com.detay.libraryautomation.model.Book;
 import com.detay.libraryautomation.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,45 +18,36 @@ import java.util.Optional;
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
+
     private final ModelMapper modelMapper;
 
-
-
     @Override
-    public AuthorEntity getAuthor(long authorId) {
+    public Author getAuthor(long authorId) {
 
         return authorRepository.findById(authorId).orElseThrow();
 
     }
 
     @Override
-    public AuthorEntity createAuthor(AuthorRequest authorRequest) {
+    public Author createAuthor(AuthorRequest authorRequest) {
 
-        Optional<AuthorEntity> optionalAuthorEntity = authorRepository.findById(authorRequest.getId());
-
+        Optional<Author> optionalAuthorEntity = authorRepository.findById(authorRequest.getId());
         if (optionalAuthorEntity.isPresent()) {
             throw new AuthorAlreadyExistException();
         }
-
-        AuthorEntity authorEntity = modelMapper.map(authorRequest, AuthorEntity.class);
-
-        return authorRepository.save(authorEntity);
+        Author author = modelMapper.map(authorRequest, Author.class);
+        return authorRepository.save(author);
     }
 
-    @Override
-    public AuthorEntity updateAuthor(long authorId, AuthorRequest authorRequest) {
 
-        AuthorEntity newAuthor = authorRepository.findById(authorId).orElseThrow(AuthorAlreadyExistException::new);
+    @Override
+    public Author updateAuthor(long authorId, AuthorRequest authorRequest) {
+
+        Author newAuthor = authorRepository.findById(authorId).orElseThrow(AuthorAlreadyExistException::new);
 
         newAuthor.setFirstName(authorRequest.getFirstName());
         newAuthor.setLastName(authorRequest.getLastName());
         newAuthor.setYearOfBirth(authorRequest.getYearOfBirth());
-
-        Optional<AuthorEntity> optionalAuthorEntity = Optional.of(authorRepository.getById(authorId));
-
-        if (newAuthor.getAuthorId() == authorRequest.getId() && optionalAuthorEntity.isPresent()) {
-            throw new AuthorAlreadyExistException();
-        }
 
         return authorRepository.save(newAuthor);
     }
@@ -62,15 +55,24 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void deleteAuthor(long authorId) {
 
-        AuthorEntity authorEntity = authorRepository.findById(authorId).orElseThrow(AuthorNotFoundException::new);
+        Author author = authorRepository.findById(authorId).orElseThrow(AuthorNotFoundException::new);
 
-        authorRepository.delete(authorEntity);
+        authorRepository.delete(author);
 
     }
 
     @Override
-    public List<AuthorEntity> getAll() {
+    public List<Author> getAll() {
         return authorRepository.findAll();
     }
+
+
+    @Override
+    public Optional<Author> getBooks(long authorId) {
+
+        return authorRepository.findById(authorId);
+
+    }
+
 
 }

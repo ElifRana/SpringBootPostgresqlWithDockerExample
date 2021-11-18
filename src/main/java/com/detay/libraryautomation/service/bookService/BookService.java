@@ -1,20 +1,21 @@
 package com.detay.libraryautomation.service.bookService;
 
+import com.detay.libraryautomation.dto.AuthorRequest;
 import com.detay.libraryautomation.dto.BookRequest;
-import com.detay.libraryautomation.model.BookEntity;
-
+import com.detay.libraryautomation.model.Author;
+import com.detay.libraryautomation.model.Book;
 import java.util.List;
 
 public interface BookService {
 
-    BookEntity getBook(int bookId);
+    Book getBook(long bookId);
 
-    BookEntity createBook(BookRequest bookRequest);
+    Book createBook(long bookId, BookRequest bookRequest);
 
-    BookEntity updateBook(int bookId, BookRequest bookRequest);
+    Book updateBook(long bookId, BookRequest bookRequest);
 
-    void deleteBook(int bookId);
+    void deleteBook(long bookId);
 
-    List<BookEntity> getAll();
+    List<Book> getAll();
 
 }
