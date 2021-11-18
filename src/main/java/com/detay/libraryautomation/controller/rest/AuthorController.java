@@ -94,25 +94,4 @@ public class AuthorController {
         return authorService.getAll();
     }
 
-    @Operation(summary = "Create new Author's book.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "New Author Created.",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Author.class))}),
-            @ApiResponse(responseCode = "400", description = "Bad Request.",
-                    content = @Content),
-            @ApiResponse(responseCode = "404", description = "Not Found.",
-                    content = @Content),
-            @ApiResponse(responseCode = "409", description = "Conflict. Author with id already exist.",
-                    content = @Content),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error.",
-                    content = @Content)
-    })
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/author/withBook")
-    public Author getAuthorId_BookId(AuthorRequest authorRequest){
-        return authorService.getAuthorId_BookId(authorRequest);
-    }
-
 }
