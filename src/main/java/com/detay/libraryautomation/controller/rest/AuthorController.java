@@ -1,6 +1,7 @@
 package com.detay.libraryautomation.controller.rest;
 
 import com.detay.libraryautomation.dto.AuthorRequest;
+import com.detay.libraryautomation.dto.AuthorUpdateRequest;
 import com.detay.libraryautomation.model.Author;
 import com.detay.libraryautomation.service.authorService.AuthorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -66,8 +67,8 @@ public class AuthorController {
     })
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{authorId}")
-    public Author updateAuthor(@NotBlank @PathVariable("authorId") long authorId, @Valid @RequestBody AuthorRequest authorRequest) {
-        return authorService.updateAuthor(authorId, authorRequest);
+    public Author updateAuthor(@NotBlank @PathVariable("authorId") long authorId, @Valid @RequestBody AuthorUpdateRequest authorUpdateRequest) {
+        return authorService.updateAuthor(authorId, authorUpdateRequest);
     }
 
     @Operation(summary = "Delete author.")

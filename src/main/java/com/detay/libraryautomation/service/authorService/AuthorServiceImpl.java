@@ -1,6 +1,7 @@
 package com.detay.libraryautomation.service.authorService;
 
 import com.detay.libraryautomation.dto.AuthorRequest;
+import com.detay.libraryautomation.dto.AuthorUpdateRequest;
 import com.detay.libraryautomation.exception.author.AuthorAlreadyExistException;
 import com.detay.libraryautomation.exception.author.AuthorNotFoundException;
 import com.detay.libraryautomation.model.Author;
@@ -39,13 +40,13 @@ public class AuthorServiceImpl implements AuthorService {
 
 
     @Override
-    public Author updateAuthor(long authorId, AuthorRequest authorRequest) {
+    public Author updateAuthor(long authorId, AuthorUpdateRequest authorUpdateRequest) {
 
         Author newAuthor = authorRepository.findById(authorId).orElseThrow(AuthorAlreadyExistException::new);
 
-        newAuthor.setFirstName(authorRequest.getFirstName());
-        newAuthor.setLastName(authorRequest.getLastName());
-        newAuthor.setYearOfBirth(authorRequest.getYearOfBirth());
+        newAuthor.setFirstName(authorUpdateRequest.getFirstName());
+        newAuthor.setLastName(authorUpdateRequest.getLastName());
+        newAuthor.setYearOfBirth(authorUpdateRequest.getYearOfBirth());
 
         return authorRepository.save(newAuthor);
     }
