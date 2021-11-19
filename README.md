@@ -2,7 +2,7 @@
 
 > This is Spring Boot PostgreSQL>
 
-<img src="https://github.com/ElifRana/SpringBootPostgresqlWithDockerExample/upload/master"/>
+<img src="https://github.com/ElifRana/SpringBootPostgresqlWithDockerExample/blob/master/postgreWithDocker.png"/>
      
 ## Prerequisites
 
