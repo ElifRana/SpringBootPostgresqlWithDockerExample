@@ -29,7 +29,7 @@ http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-confi
 
 <img src="https://github.com/ElifRana/SpringBootPostgresqlWithDockerExample/blob/master/openapi.png"/> 
 
-## Dockerizing Java Apps using Jib.
+# Dockerizing Java Apps using Jib.
 
 
 
