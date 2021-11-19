@@ -53,7 +53,7 @@ public class AuthorController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/author")
-    public Author createAuthor(@Valid AuthorRequest authorRequest) {
+    public Author createAuthor(@RequestBody @Valid AuthorRequest authorRequest) {
         return authorService.createAuthor(authorRequest);
     }
 

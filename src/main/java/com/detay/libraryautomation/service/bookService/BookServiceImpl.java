@@ -3,15 +3,14 @@ package com.detay.libraryautomation.service.bookService;
 import com.detay.libraryautomation.dto.BookRequest;
 import com.detay.libraryautomation.exception.book.BookAlreadyExistsException;
 import com.detay.libraryautomation.exception.book.BookNotFoundException;
+import com.detay.libraryautomation.model.Author;
 import com.detay.libraryautomation.model.Book;
-import com.detay.libraryautomation.repository.AuthorRepository;
 import com.detay.libraryautomation.repository.BookRepository;
+import com.detay.libraryautomation.service.authorService.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +18,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
+    private final AuthorService authorService;
 
     @Override
     public Book getBook(long bookId) {
@@ -26,13 +26,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book createBook(long bookId, BookRequest bookRequest) {
+    public Book createBook(BookRequest bookRequest) {
 
-        Optional<Book> optionalBookEntity = bookRepository.findById(bookRequest.getBookId());
-        if (optionalBookEntity.isPresent()) {
-            throw new BookAlreadyExistsException();
-        }
+        Author author = authorService.getAuthor(bookRequest.getAuthorId());
         Book book = modelMapper.map(bookRequest, Book.class);
+
+        if (author != null) {
+            book.setAuthor(author);
+        }
+
         return bookRepository.save(book);
     }
 

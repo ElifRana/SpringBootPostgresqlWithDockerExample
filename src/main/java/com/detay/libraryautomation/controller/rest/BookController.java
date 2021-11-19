@@ -55,8 +55,8 @@ public class BookController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/book")
-    public Book createBook(@NotBlank @PathVariable("bookId") long bookId,@Valid @RequestBody BookRequest bookRequest) {
-        return bookService.createBook(bookId, bookRequest);
+    public Book createBook(@Valid @RequestBody BookRequest bookRequest) {
+        return bookService.createBook(bookRequest);
     }
 
     @Operation(summary = "Update book.")
@@ -95,6 +95,5 @@ public class BookController {
     public List<Book> getAll() {
         return bookService.getAll();
     }
-
 
 }

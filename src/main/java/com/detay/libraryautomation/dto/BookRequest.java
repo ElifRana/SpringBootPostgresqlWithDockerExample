@@ -19,5 +19,6 @@ public class BookRequest {
 
     String publisher;
 
+    long authorId;
 
 }

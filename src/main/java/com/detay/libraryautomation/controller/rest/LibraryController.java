@@ -12,8 +12,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/libraries")
@@ -30,9 +32,9 @@ public class LibraryController {
                     content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{id}")
-    public Library getLibrary(@NotBlank @PathVariable("id") long id) {
-        return libraryService.getLibrary(id);
+    @GetMapping("/{libraryId}")
+    public Library getLibrary(@NotBlank @PathVariable("libraryId") long libraryId) {
+        return libraryService.getLibrary(libraryId);
     }
 
     @Operation(summary = "Create new library")
@@ -65,9 +67,9 @@ public class LibraryController {
                     content = @Content)
     })
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{id}")
-    public Library updateLibrary(@NotBlank @PathVariable("id") Long id, @Valid @RequestBody LibraryRequest libraryRequest) {
-        return libraryService.updateLibrary(id, libraryRequest);
+    @PutMapping("/{libraryId}")
+    public Library updateLibrary(@NotBlank @PathVariable("libraryId") Long libraryId, @Valid @RequestBody LibraryRequest libraryRequest) {
+        return libraryService.updateLibrary(libraryId, libraryRequest);
     }
 
     @Operation(summary = "Delete library.")
@@ -78,9 +80,20 @@ public class LibraryController {
                     content = @Content)
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/delete{id}")
-    public void deleteLibrary(Long id) {
-        libraryService.deleteLibrary(id);
+    @DeleteMapping("/delete{libraryId}")
+    public void deleteLibrary(@PathVariable("libraryId") Long libraryId) {
+        libraryService.deleteLibrary(libraryId);
+    }
+
+    @Operation(summary = "Get all libraries.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All libraries listed.",
+                    content = {@Content(mediaType = "application/json")})
+    })
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/getLibraries")
+    public List<Library> getAll() {
+        return libraryService.getAll();
     }
 
 }

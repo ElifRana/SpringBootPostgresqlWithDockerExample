@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 @Builder
 public class AuthorRequest {
 
-    long id;
+    long authorId;
 
     @NotBlank
     String firstName;

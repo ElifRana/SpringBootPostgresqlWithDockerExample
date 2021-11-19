@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LibraryRequest {
 
-    long id;
+    long libraryId;
 
     String name;
 

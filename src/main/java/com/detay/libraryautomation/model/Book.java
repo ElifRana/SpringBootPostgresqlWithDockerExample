@@ -1,9 +1,5 @@
 package com.detay.libraryautomation.model;
 
-import com.detay.libraryautomation.dto.AuthorRequest;
-import com.detay.libraryautomation.dto.LibraryRequest;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,9 +28,8 @@ public class Book {
     String publisher;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "author_id", referencedColumnName = "authorId")
-   // @JsonIgnoreProperties("bookList")
-  //  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JoinColumn(name = "author_id", referencedColumnName = "author_id")
     private Author author;
+
 
 }

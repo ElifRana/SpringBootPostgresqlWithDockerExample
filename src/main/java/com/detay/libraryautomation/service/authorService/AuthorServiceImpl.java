@@ -4,12 +4,10 @@ import com.detay.libraryautomation.dto.AuthorRequest;
 import com.detay.libraryautomation.exception.author.AuthorAlreadyExistException;
 import com.detay.libraryautomation.exception.author.AuthorNotFoundException;
 import com.detay.libraryautomation.model.Author;
-import com.detay.libraryautomation.model.Book;
 import com.detay.libraryautomation.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +29,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Author createAuthor(AuthorRequest authorRequest) {
 
-        Optional<Author> optionalAuthorEntity = authorRepository.findById(authorRequest.getId());
+        Optional<Author> optionalAuthorEntity = authorRepository.findById(authorRequest.getAuthorId());
         if (optionalAuthorEntity.isPresent()) {
             throw new AuthorAlreadyExistException();
         }
@@ -65,14 +63,5 @@ public class AuthorServiceImpl implements AuthorService {
     public List<Author> getAll() {
         return authorRepository.findAll();
     }
-
-
-    @Override
-    public Optional<Author> getBooks(long authorId) {
-
-        return authorRepository.findById(authorId);
-
-    }
-
 
 }
